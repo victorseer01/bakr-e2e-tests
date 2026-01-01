@@ -85,41 +85,91 @@ npm run report
 ```
 bakr-e2e-tests/
 ├── helpers/
-│   ├── auth-helper.ts      # Authentication utilities
-│   └── api-helper.ts       # API testing utilities
+│   ├── auth-helper.ts         # Authentication utilities
+│   └── api-helper.ts          # API testing utilities
 ├── tests/
-│   ├── auth.spec.ts        # Authentication tests
-│   ├── products.spec.ts    # Product management tests
-│   ├── raw-materials.spec.ts # Raw materials tests
-│   └── production.spec.ts  # Production batch tests
-├── playwright.config.ts    # Playwright configuration
-└── .env                    # Environment variables (not committed)
+│   ├── auth.spec.ts           # Authentication tests
+│   ├── users.spec.ts          # User management tests
+│   ├── branches.spec.ts       # Branch management tests
+│   ├── products.spec.ts       # Product management tests
+│   ├── inventory.spec.ts      # Stock/inventory tests
+│   ├── sales.spec.ts          # Sales and orders tests
+│   ├── raw-materials.spec.ts  # Raw materials tests
+│   ├── production.spec.ts     # Production batch tests
+│   └── transfers.spec.ts      # Transfer operations tests
+├── playwright.config.ts       # Playwright configuration
+└── .env                       # Environment variables (not committed)
 ```
 
 ## Test Scenarios
 
 ### Authentication (`auth.spec.ts`)
-- Login with different user roles
+- Login with different user roles (Super Admin, Branch Manager, Sales Staff, Production Staff)
 - Invalid credentials handling
 - Logout functionality
+- Session management
+
+### User Management (`users.spec.ts`)
+- Create new user with role assignment
+- Edit user details
+- Delete user with confirmation
+- Filter users by role
+- Search users by name/username
+- Toggle user active/inactive status
+- View user profile
+
+### Branch Management (`branches.spec.ts`)
+- Create new branch
+- Edit branch details
+- Delete branch with confirmation
+- Assign manager to branch
+- View branch details and statistics
+- Search branches
 
 ### Products (`products.spec.ts`)
 - Create new product
 - Edit existing product
 - Delete product with confirmation
-- Search and filter products
+- Validate product data
+- Manage pricing
+
+### Inventory/Stock Management (`inventory.spec.ts`)
+- View stock levels
+- Identify low stock items
+- Filter stock by status
+- Request stock replenishment
+- View stock history
+- Export stock reports
+- Multi-branch stock visibility
+
+### Sales/Orders (`sales.spec.ts`)
+- Create sales orders
+- View sales history
+- Filter sales by date
+- View sale details
+- Generate sales reports
+- View sales statistics
+- Role-based operations (Staff, Manager, Admin perspectives)
 
 ### Raw Materials (`raw-materials.spec.ts`)
 - Create raw material with initial stock
 - Adjust stock levels
 - View low stock materials
 - Edit material details
+- Track material costs
 
 ### Production (`production.spec.ts`)
 - Create production batch
 - View batch details
 - Filter batches by status
+- Track material consumption
 - Complete/void batches
+
+### Transfers (`transfers.spec.ts`)
+- Create HQ to branch transfers
+- View transfer details
+- Filter transfers by status
+- Void pending transfers
 
 ## CI/CD Integration
 

@@ -49,10 +49,30 @@ npm run test:webkit
 - Invalid credentials handling
 - Logout functionality
 
+✅ **User Management** (`tests/users.spec.ts`)
+- Create/Edit/Delete users
+- Role assignment
+- User filtering and search
+
+✅ **Branch Management** (`tests/branches.spec.ts`)
+- Create/Edit/Delete branches
+- Manager assignment
+- Branch statistics
+
 ✅ **Products** (`tests/products.spec.ts`)
 - Create/Edit/Delete products
 - Product validation
 - Confirmation dialogs
+
+✅ **Inventory/Stock** (`tests/inventory.spec.ts`)
+- Stock level monitoring
+- Low stock alerts
+- Replenishment requests
+
+✅ **Sales/Orders** (`tests/sales.spec.ts`)
+- Create sales orders
+- Sales history
+- Analytics and reports
 
 ✅ **Raw Materials** (`tests/raw-materials.spec.ts`)
 - Create materials with stock
@@ -101,21 +121,25 @@ PRODUCTION_STAFF_PASSWORD=***
 
 ```
 bakr-e2e-tests/
-├── tests/                    # Test specifications
-│   ├── auth.spec.ts         # Authentication tests
-│   ├── products.spec.ts     # Product management tests
+├── tests/                     # Test specifications (9 test files)
+│   ├── auth.spec.ts          # Authentication tests
+│   ├── users.spec.ts         # User management tests
+│   ├── branches.spec.ts      # Branch management tests
+│   ├── products.spec.ts      # Product management tests
+│   ├── inventory.spec.ts     # Stock/inventory tests
+│   ├── sales.spec.ts         # Sales and orders tests
 │   ├── raw-materials.spec.ts # Materials tests
-│   ├── production.spec.ts   # Production tests
-│   └── transfers.spec.ts    # Transfer tests
-├── helpers/                  # Utilities
-│   ├── auth-helper.ts       # Login/logout helpers
-│   └── api-helper.ts        # API testing utilities
-├── .github/workflows/        # CI/CD automation
-│   └── e2e-tests.yml        # GitHub Actions workflow
-├── playwright.config.ts      # Test configuration
-├── README.md                 # Full documentation
-├── SETUP.md                  # Detailed setup guide
-└── .env.example              # Environment template
+│   ├── production.spec.ts    # Production tests
+│   └── transfers.spec.ts     # Transfer tests
+├── helpers/                   # Utilities
+│   ├── auth-helper.ts        # Login/logout helpers
+│   └── api-helper.ts         # API testing utilities
+├── .github/workflows/         # CI/CD automation
+│   └── e2e-tests.yml         # GitHub Actions workflow
+├── playwright.config.ts       # Test configuration
+├── README.md                  # Full documentation
+├── SETUP.md                   # Detailed setup guide
+└── .env.example               # Environment template
 ```
 
 ## Common Commands
