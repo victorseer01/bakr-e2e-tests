@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Page, expect, test as baseTest } from '@playwright/test';
 
 export type UserRole = 'SUPER_ADMIN' | 'BRANCH_MANAGER' | 'SALES_STAFF' | 'PRODUCTION_STAFF';
 
@@ -6,6 +6,7 @@ export interface TestUser {
   username: string;
   password: string;
   role: UserRole;
+  dashboardPath: string;
 }
 
 /**
@@ -29,6 +30,17 @@ export async function login(page: Page, username: string, password: string) {
 
   // Wait for navigation to dashboard
   await page.waitForURL(/\/(hq|manager|staff)\/dashboard/, { timeout: 10000 });
+}
+
+/**
+ * Login as specific role
+ * @param page - Playwright page object
+ * @param role - User role to login as
+ */
+export async function loginAsRole(page: Page, role: UserRole) {
+  const users = getTestUsers();
+  const user = users[role];
+  await login(page, user.username, user.password);
 }
 
 /**
@@ -57,22 +69,39 @@ export function getTestUsers(): Record<UserRole, TestUser> {
     SUPER_ADMIN: {
       username: process.env.SUPER_ADMIN_USERNAME || 'admin',
       password: process.env.SUPER_ADMIN_PASSWORD || 'password',
-      role: 'SUPER_ADMIN'
+      role: 'SUPER_ADMIN',
+      dashboardPath: '/hq/dashboard'
     },
     BRANCH_MANAGER: {
       username: process.env.BRANCH_MANAGER_USERNAME || 'manager',
       password: process.env.BRANCH_MANAGER_PASSWORD || 'password',
-      role: 'BRANCH_MANAGER'
+      role: 'BRANCH_MANAGER',
+      dashboardPath: '/manager/dashboard'
     },
     SALES_STAFF: {
       username: process.env.SALES_STAFF_USERNAME || 'staff',
       password: process.env.SALES_STAFF_PASSWORD || 'password',
-      role: 'SALES_STAFF'
+      role: 'SALES_STAFF',
+      dashboardPath: '/staff/dashboard'
     },
     PRODUCTION_STAFF: {
       username: process.env.PRODUCTION_STAFF_USERNAME || 'production',
       password: process.env.PRODUCTION_STAFF_PASSWORD || 'password',
-      role: 'PRODUCTION_STAFF'
+      role: 'PRODUCTION_STAFF',
+      dashboardPath: '/staff/dashboard'
     }
   };
 }
+
+/**
+ * Create a test fixture with authenticated user by role
+ * Use this to create role-specific test suites
+ */
+export const testAsRole = (role: UserRole) => {
+  return baseTest.extend<{ authenticatedPage: Page }>({
+    authenticatedPage: async ({ page }, use) => {
+      await loginAsRole(page, role);
+      await use(page);
+    },
+  });
+};
