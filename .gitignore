@@ -1,6 +1,7 @@
 node_modules/
 /.env
 /test-results/
+/test-results.json
 /playwright-report/
 /playwright/.cache/
 /.auth/
